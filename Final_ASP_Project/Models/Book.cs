@@ -14,7 +14,7 @@ namespace Final_ASP_Project.Models
         public DateTime publication_date { get; set; }
         public string book_Author { get; set; }
         [Required]
-        public decimal Book_Price { get; set; }
+        public double Book_Price { get; set; }
         [Required]
         public int book_Quantity { get; set; }               // so luong nhap kho
         public string book_Publisher { get; set; }
