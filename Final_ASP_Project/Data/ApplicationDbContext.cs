@@ -11,8 +11,9 @@ namespace Final_ASP_Project.Data
             : base(options)
         {
         }
-        public DbSet<Genre> Genres { get; set; }
-        public DbSet<Book> Books { get; set; }
+        public DbSet<Genre> genres { get; set; }
+        public DbSet<Publisher> publishers { get; set; }
+        public DbSet<Book> books { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<ShoppingCart> carts { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
