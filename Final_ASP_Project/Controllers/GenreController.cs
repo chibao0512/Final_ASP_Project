@@ -52,7 +52,7 @@ namespace Final_ASP_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                genre.Gen_Id = id;
+                genre.genre_Id = id;
                 _db.genres.Update(genre);
                 _db.SaveChanges();
                 return RedirectToAction("Index");

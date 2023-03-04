@@ -4,6 +4,7 @@ using Final_ASP_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Final_ASP_Project.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230304084136_Mig1")]
+    partial class Mig1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,7 +109,7 @@ namespace Final_ASP_Project.Data.Migrations
                             Id = "1",
                             AccessFailedCount = 0,
                             Address = "CAN THO",
-                            ConcurrencyStamp = "f867baea-05cf-4b2d-a350-8d3e75a5e733",
+                            ConcurrencyStamp = "4e179dea-31d2-4dc7-ab8b-18de842495e0",
                             DoB = new DateTime(2002, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
@@ -116,7 +118,7 @@ namespace Final_ASP_Project.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKtFO4SXDhFrOQcrJvPgeJtcw5FTUlHzMLrMC6hfIRls+rnuKbYfqreNYr8lm6fUnQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN6Gw+2xahQogauDtGRlGBv1xVN0DGIWGpE5X4t4iWV8t7dsbxmvF7Ujr2jUUVUEzw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -132,29 +134,21 @@ namespace Final_ASP_Project.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("book_Id"), 1L, 1);
 
-                    b.Property<decimal>("Book_Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("book_Author")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("book_Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("book_Publisher")
-                        .IsRequired()
+                    b.Property<string>("book_ImagURL")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("book_Price")
+                        .HasColumnType("float");
 
                     b.Property<int>("book_Quantity")
                         .HasColumnType("int");
 
                     b.Property<string>("book_Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("book_urlImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("genre_Id")
@@ -167,7 +161,7 @@ namespace Final_ASP_Project.Data.Migrations
 
                     b.HasIndex("genre_Id");
 
-                    b.ToTable("books");
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("Final_ASP_Project.Models.Cart", b =>
@@ -216,12 +210,11 @@ namespace Final_ASP_Project.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("genre_Status")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("genre_Id");
 
-                    b.ToTable("genres");
+                    b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("Final_ASP_Project.Models.Order", b =>
@@ -265,32 +258,6 @@ namespace Final_ASP_Project.Data.Migrations
                     b.HasIndex("BookId");
 
                     b.ToTable("OrderDetails");
-                });
-
-            modelBuilder.Entity("Final_ASP_Project.Models.Publisher", b =>
-                {
-                    b.Property<int>("Publisher_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Publisher_Id"), 1L, 1);
-
-                    b.Property<string>("Hotline")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Publisher_Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Publisher_Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Publisher_Id");
-
-                    b.ToTable("publishers");
                 });
 
             modelBuilder.Entity("Final_ASP_Project.Models.ShoppingCart", b =>
@@ -342,21 +309,21 @@ namespace Final_ASP_Project.Data.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "775ab459-a0f0-4163-bb4a-02fea5a251a9",
+                            ConcurrencyStamp = "b5d230c8-3a68-428a-b06c-339a03e62b2b",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "2b88b08e-cc9d-4f4d-a833-74ca53dd146d",
+                            ConcurrencyStamp = "782a8ba3-241d-4390-b532-d418a21bac04",
                             Name = "Owner",
                             NormalizedName = "Owner"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "847eac9e-87e5-4f17-99ac-d83e18f54aa4",
+                            ConcurrencyStamp = "2e8f677c-00ff-4c7b-943e-eee0c968f8d5",
                             Name = "Customer",
                             NormalizedName = "Customer"
                         });
@@ -477,13 +444,13 @@ namespace Final_ASP_Project.Data.Migrations
 
             modelBuilder.Entity("Final_ASP_Project.Models.Book", b =>
                 {
-                    b.HasOne("Final_ASP_Project.Models.Genre", "genre")
-                        .WithMany("books")
+                    b.HasOne("Final_ASP_Project.Models.Genre", "genres")
+                        .WithMany("Books")
                         .HasForeignKey("genre_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("genre");
+                    b.Navigation("genres");
                 });
 
             modelBuilder.Entity("Final_ASP_Project.Models.Cart", b =>
@@ -519,7 +486,7 @@ namespace Final_ASP_Project.Data.Migrations
             modelBuilder.Entity("Final_ASP_Project.Models.OrderDetail", b =>
                 {
                     b.HasOne("Final_ASP_Project.Models.Book", "Book")
-                        .WithMany()
+                        .WithMany("OrderDetails")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -604,9 +571,14 @@ namespace Final_ASP_Project.Data.Migrations
                     b.Navigation("ShoppingCarts");
                 });
 
+            modelBuilder.Entity("Final_ASP_Project.Models.Book", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
             modelBuilder.Entity("Final_ASP_Project.Models.Genre", b =>
                 {
-                    b.Navigation("books");
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("Final_ASP_Project.Models.Order", b =>

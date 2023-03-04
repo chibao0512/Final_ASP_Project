@@ -25,7 +25,7 @@ namespace Final_ASP_Project.Controllers
         // create
         public IActionResult Create()
         {
-            ViewData["Gen_Id"] = new SelectList(_db.genres, "Gen_Id", "Gen_Name");
+            ViewData["genre_Id"] = new SelectList(_db.genres, "genre_Id", "genre_Name");
             return View();
         }
 
@@ -35,7 +35,7 @@ namespace Final_ASP_Project.Controllers
             if (ModelState.IsValid)
             {
                 string fileName = UploadFile(book);
-                book.urlImage = fileName;
+                book.book_urlImage = fileName;
                 _db.books.Add(book);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
@@ -48,16 +48,16 @@ namespace Final_ASP_Project.Controllers
         {
             string uniqueFileName = null;
 
-            if (book.Image != null)
+            if (book.book_Image != null)
             {
                 string uploadsFoder = Path.Combine("wwwroot", "uploads");
                 // name file
-                uniqueFileName = Guid.NewGuid().ToString() + book.Book_Id + book.Image.FileName;
+                uniqueFileName = Guid.NewGuid().ToString() + book.book_Id + book.book_Image.FileName;
                 string filePath = Path.Combine(uploadsFoder, uniqueFileName);
                 // copy ve code
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    book.Image.CopyTo(fileStream);
+                    book.book_Image.CopyTo(fileStream);
                 }
             }
             return uniqueFileName;
@@ -66,7 +66,7 @@ namespace Final_ASP_Project.Controllers
 
         public IActionResult Edit(int id)
         {
-            ViewData["Gen_Id"] = new SelectList(_db.genres, "Gen_Id", "Gen_Name");
+            ViewData["genre_Id"] = new SelectList(_db.genres, "genre_Id", "genre_Name");
             Book book = _db.books.Find(id);
             if (book == null)
             {
@@ -79,17 +79,17 @@ namespace Final_ASP_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (book.Image == null)
+                if (book.book_Image == null)
                 {
-                    book.urlImage = img;
+                    book.book_urlImage = img;
                     _db.books.Update(book);
                     _db.SaveChanges();
                 }
                 else
                 {
-                    book.Book_Id = id;
+                    book.book_Id = id;
                     string uniqueFileName = UploadFile(book);
-                    book.urlImage = uniqueFileName;
+                    book.book_urlImage = uniqueFileName;
 
                     _db.books.Update(book);
                     _db.SaveChanges();

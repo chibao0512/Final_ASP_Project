@@ -1,5 +1,7 @@
-﻿using Final_ASP_Project.Models;
+﻿using Final_ASP_Project.Data;
+using Final_ASP_Project.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace Final_ASP_Project.Controllers
@@ -7,20 +9,39 @@ namespace Final_ASP_Project.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ApplicationDbContext _db;
+        public HomeController(ApplicationDbContext db)
         {
-            _logger = logger;
+            _db = db;
         }
 
-        public IActionResult Index()
+        public IActionResult Index()    
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult ShowBookUser()
         {
-            return View();
+            IEnumerable<Book> book = _db.books.Include(b => b.genre).ToList();
+            return View(book);
+
+        }
+        public async Task<IActionResult> ShowBookUserDetail(int? id)
+        {
+            if (id == null || _db.books == null)
+            {
+                return NotFound();
+            }
+
+            var book = await _db.books
+                .Include(b => b.genre)
+                .FirstOrDefaultAsync(m => m.book_Id == id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            return View(book);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

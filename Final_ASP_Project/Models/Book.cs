@@ -7,22 +7,23 @@ namespace Final_ASP_Project.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Book_Id { get; set; }
+        public int book_Id { get; set; }
         [Required]
-        public string Book_Title { get; set; }
+        public string book_Title { get; set; }
         [Required]
-        public string Book_Author { get; set; }
+        public DateTime publication_date { get; set; }
+        public string book_Author { get; set; }
         [Required]
         public decimal Book_Price { get; set; }
         [Required]
-        public int Book_Quantity { get; set; }               // so luong nhap kho
-        public string Book_Publisher { get; set; }
-        public string Book_Description { get; set; }
+        public int book_Quantity { get; set; }               // so luong nhap kho
+        public string book_Publisher { get; set; }
+        public string book_Description { get; set; }
         [NotMapped]
-        public IFormFile? Image { get; set; }
-        public string? urlImage { get; set; }
-        public int Gen_Id { get; set; }
-        [ForeignKey("Gen_Id")]
+        public IFormFile? book_Image { get; set; }
+        public string? book_urlImage { get; set; }
+        public int genre_Id { get; set; }
+        [ForeignKey("genre_Id")]
         public virtual Genre? genre { get; set; }
     }
 }

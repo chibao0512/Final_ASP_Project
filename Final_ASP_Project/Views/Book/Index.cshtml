@@ -8,31 +8,31 @@
     <tr>
         <th>ID</th>
         <th>Title</th>
+        <th>Image</th>
         <th>Author</th>
-        <th>Price</th>
         <th>Quantity</th>
+        <th>Price</th>    
+        <th>Publication Date</th>
         <th>Genre</th>
         <th>Publisher</th>
-        <th>Image</th>
         <th>Description</th>
     </tr>
     @foreach (var book in Model)
     {
         <tr>
-           <th>@book.Book_Id</th>
-            <th>@book.Book_Title</th>
-            <th>@book.Book_Author</th>
+           <th>@book.book_Id</th>
+            <th>@book.book_Title</th>
+            <th><img src="~/uploads/@book.book_urlImage" style="width: 100px; height: 100px" /></th>
+            <th>@book.book_Author</th>
+            <th>@book.book_Quantity</th>
             <th>@book.Book_Price</th>
-            <th>@book.Book_Quantity</th>
-            <th>@book.genre.Gen_Name</th>
-            <th>@book.Book_Publisher</th>
-            <th>@book.Book_Description</th>
-            <th><img src="~/uploads/@book.urlImage" style="width: 100px; height: 100px"/></th>
-            <th>@book.Book_Description</th>
-
+            <th>@book.publication_date</th>
+            <th>@book.genre.genre_Name</th>
+            <th>@book.book_Publisher</th>
+            <th>@book.book_Description</th>    
             <td>
-                <a asp-action="Edit" asp-route-id=@book.Book_Id asp-route-img="@book.Image"> Edit</a>
-                <a asp-action="Delete" asp-route-id=@book.Book_Id asp-route-img="@book.urlImage" onclick="return confirm('Are You Sure?');"> Delete</a>
+                <a asp-action="Edit" asp-route-id=@book.book_Id asp-route-img="@book.book_Image"> Edit</a>
+                <a asp-action="Delete" asp-route-id=@book.book_Id asp-route-img="@book.book_urlImage" onclick="return confirm('Are You Sure?');"> Delete</a>
             </td>
         </tr>
     }
