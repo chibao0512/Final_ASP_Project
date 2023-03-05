@@ -15,7 +15,7 @@ namespace Final_ASP_Project.Controllers
         // index
         public IActionResult Index()
         {
-            IEnumerable<Genre> genre = _db.genres.ToList();
+            IEnumerable<Genre> genre = _db.genres.Where(c => c.genre_Status == "processed").ToList();
             return View(genre);
         }
 
@@ -30,6 +30,7 @@ namespace Final_ASP_Project.Controllers
         {
             if (ModelState.IsValid)
             {
+                genre.genre_Status = "Processing";
                 _db.genres.Add(genre);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
@@ -53,6 +54,7 @@ namespace Final_ASP_Project.Controllers
             if (ModelState.IsValid)
             {
                 genre.genre_Id = id;
+                genre.genre_Status = "prosessed";
                 _db.genres.Update(genre);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
@@ -61,12 +63,19 @@ namespace Final_ASP_Project.Controllers
         }
 
         // delete
-        public IActionResult Delete(int id)
+        public ActionResult Delete(int id)
         {
-            Genre genre = _db.genres.Find(id);
-            _db.genres.Remove(genre);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            Genre Genre = _db.genres.Find(id);
+            if (Genre == null)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                _db.genres.Remove(Genre);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
         }
     }
 }
