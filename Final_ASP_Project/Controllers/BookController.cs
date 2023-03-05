@@ -78,7 +78,7 @@ namespace Final_ASP_Project.Controllers
             book.book_Id=id;
             if (ModelState.IsValid)
             {
-                if (book.book_urlImage == null)
+                if (book.book_Img == null)
                 {
                     book.book_urlImage = img;
                     _db.books.Update(book);
@@ -131,6 +131,26 @@ namespace Final_ASP_Project.Controllers
                 return RedirectToAction("Index");
             }
         }
+        public async Task<IEnumerable<Book>> GetBooks()
+        {
+            IEnumerable<Book> books = await (from book in _db.books
+                                             join genre in _db.genres
+                                             on book.genre_Id equals genre.genre_Id
+                                             select new Book
+                                             {
+                                                 book_Id = book.book_Id,
+                                                 book_urlImage = book.book_urlImage,
+                                                 genre = book.genre,
+                                                 book_Title = book.book_Title,
+                                                 genre_Id = book.genre_Id,
+                                                 Book_Price = book.Book_Price,
+                                                 book_Quantity = book.book_Quantity,
+                                                 publication_date = book.publication_date,
+                                                 book_Description = book.book_Description
+                                             }
+                         ).ToListAsync();
+            return books;
 
+        }
     }
 }

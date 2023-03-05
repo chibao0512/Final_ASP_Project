@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Genre>
+
+
+
+<div class="card">
+    <div class="card-body">
+        <h1 class="card-title" style="text-align:center; font-size:30px">Genre</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Genre Name
+                    </th>
+                    <th>
+                        Genre Description
+                    </th>
+
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.genre_Name
+                        </td>
+                        <td>
+                            @item.genre_Name
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" asp-controller="Admin" asp-action="Approval" asp-route-id="@item.genre_Id">Approval</a>
+                            <a class="btn btn-danger" asp-controller="Admin" asp-action="Reject" asp-route-id="@item.genre_Id" onclick="return confirm ('Are you sure?')">Reject</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

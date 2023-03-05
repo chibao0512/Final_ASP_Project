@@ -1,26 +1,24 @@
 ﻿@model Final_ASP_Project.Models.Genre
 <h1>Create genre</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label>Name</label>
-                <input asp-for="genre_Name" class="form-control" />
-                <span asp-validation-for="genre_Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <input asp-for="genre_Description" class="form-control" />
-                <span asp-validation-for="genre_Description" class="text-danger"></span>
-            </div>
-            <br />
-            <hr />
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="col-md-8 grid-margin stretch-card" style="margin-left:230px">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title" style="text-align:center">Create Genre</h3>
+            <form class="forms-sample" asp-controller="Genre" asp-action="Create" method="post">
+                <div class="form-group">
+                    <label>Genre Name</label>
+                    <input type="text" class="form-control" asp-for="genre_Name" placeholder="Genre Name">
+                </div>
+                <div class="form-group">
+                    <label>Genre Description</label>
+                    <input type="text" class="form-control" asp-for="genre_Description" placeholder="Genre Description">
+                </div>
+
+                <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                <a class="btn btn-light" asp-controller="Genre" asp-action="Index">Back to List</a>
+            </form>
+        </div>
     </div>
 </div>
 
