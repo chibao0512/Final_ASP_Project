@@ -2,8 +2,8 @@
 @{
 
 }
-<div class="my-2" style="margin-left: 750px">
-    <form asp-action="Index" class="row col-12 align-items-center">
+<div class="my-2" style="margin-left: 80%" style="text-align:right">
+    <form asp-action="Index" class="row col-12 align-items-right" >
 
         <div class="col-8">
             <label class="visually-hidden" for="sterm">Search by title</label>
@@ -46,6 +46,8 @@
                     else
                     {
                         <button type="button" onclick="add(@book.book_Id)" class="btn btn-primary">Add to cart</button>
+                            //<a asp-action="BookDetail" asp-route-id="@book.book_Id" class="btn btn-primary">View Detail</a>
+                            <a asp-controller="Home" asp-action="BookDetail" asp-route-cate="@book.genre.genre_Name" asp-route-id="@book.book_Id" class="btn btn-warning">View Detail</a>
                     }
                     </div>
 

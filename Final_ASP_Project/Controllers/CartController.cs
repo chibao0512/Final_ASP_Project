@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Final_ASP_Project.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -51,18 +52,18 @@ namespace Final_ASP_Project.Controllers
             return Ok(cartItem);
         }
 
-        [Route("User/Cart/Checkout")]
+        [Route("User/Cart/Checkout")]               
         public async Task<IActionResult> Checkout()
         {
             var isCheckedOut = await DoCheckout();
             if (!isCheckedOut)
             {
-                TempData["Quantity"] = "The number of products is not enough!";
+                TempData["Quantity"] = "The number of products is not enough! The quantity have only";
                 return Redirect("~/User/Cart/GetUserCart");
             }
             else
             {
-                TempData["Success"] = "Order Success";
+                TempData["Success"] = "Order Success, thanks for order";
                 return Redirect("~/User/Cart/GetUserCart");
             }
 
@@ -119,7 +120,6 @@ namespace Final_ASP_Project.Controllers
             var cartItemCount = await GetCartItemCount(userId);
             return cartItemCount;
         }
-
 
         public async Task<int> RemoveCartItem(int bookId)
         {
