@@ -4,18 +4,16 @@ using Final_ASP_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Final_ASP_Project.Data.Migrations
+namespace Final_ASP_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230304084136_Mig1")]
-    partial class Mig1
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,7 +107,7 @@ namespace Final_ASP_Project.Data.Migrations
                             Id = "1",
                             AccessFailedCount = 0,
                             Address = "CAN THO",
-                            ConcurrencyStamp = "4e179dea-31d2-4dc7-ab8b-18de842495e0",
+                            ConcurrencyStamp = "070893b1-72ef-479a-8965-84e7a1d4cf9a",
                             DoB = new DateTime(2002, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
@@ -118,7 +116,7 @@ namespace Final_ASP_Project.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN6Gw+2xahQogauDtGRlGBv1xVN0DGIWGpE5X4t4iWV8t7dsbxmvF7Ujr2jUUVUEzw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJhG1i84hGXwMpzEuMiIQBmDflV6JpFqCo6/P9EfSkWEBLboIaOs1R61rL+8XnbklA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -134,21 +132,29 @@ namespace Final_ASP_Project.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("book_Id"), 1L, 1);
 
+                    b.Property<double>("Book_Price")
+                        .HasColumnType("float");
+
+                    b.Property<string>("book_Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("book_Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("book_ImagURL")
+                    b.Property<string>("book_Publisher")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("book_Price")
-                        .HasColumnType("float");
 
                     b.Property<int>("book_Quantity")
                         .HasColumnType("int");
 
                     b.Property<string>("book_Title")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("book_urlImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("genre_Id")
@@ -161,7 +167,7 @@ namespace Final_ASP_Project.Data.Migrations
 
                     b.HasIndex("genre_Id");
 
-                    b.ToTable("Books");
+                    b.ToTable("books");
                 });
 
             modelBuilder.Entity("Final_ASP_Project.Models.Cart", b =>
@@ -209,12 +215,9 @@ namespace Final_ASP_Project.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("genre_Status")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("genre_Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("genres");
                 });
 
             modelBuilder.Entity("Final_ASP_Project.Models.Order", b =>
@@ -258,6 +261,32 @@ namespace Final_ASP_Project.Data.Migrations
                     b.HasIndex("BookId");
 
                     b.ToTable("OrderDetails");
+                });
+
+            modelBuilder.Entity("Final_ASP_Project.Models.Publisher", b =>
+                {
+                    b.Property<int>("Publisher_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Publisher_Id"), 1L, 1);
+
+                    b.Property<string>("Hotline")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Publisher_Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Publisher_Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Publisher_Id");
+
+                    b.ToTable("publishers");
                 });
 
             modelBuilder.Entity("Final_ASP_Project.Models.ShoppingCart", b =>
@@ -309,21 +338,21 @@ namespace Final_ASP_Project.Data.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "b5d230c8-3a68-428a-b06c-339a03e62b2b",
+                            ConcurrencyStamp = "9f76b5f3-8a27-4340-ae7f-3cbaeec33f0c",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "782a8ba3-241d-4390-b532-d418a21bac04",
+                            ConcurrencyStamp = "5042ec6d-692a-4413-927f-477e30a455ea",
                             Name = "Owner",
                             NormalizedName = "Owner"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "2e8f677c-00ff-4c7b-943e-eee0c968f8d5",
+                            ConcurrencyStamp = "abd67a2a-2071-4827-be32-5a837dc37799",
                             Name = "Customer",
                             NormalizedName = "Customer"
                         });
@@ -444,13 +473,13 @@ namespace Final_ASP_Project.Data.Migrations
 
             modelBuilder.Entity("Final_ASP_Project.Models.Book", b =>
                 {
-                    b.HasOne("Final_ASP_Project.Models.Genre", "genres")
-                        .WithMany("Books")
+                    b.HasOne("Final_ASP_Project.Models.Genre", "genre")
+                        .WithMany("books")
                         .HasForeignKey("genre_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("genres");
+                    b.Navigation("genre");
                 });
 
             modelBuilder.Entity("Final_ASP_Project.Models.Cart", b =>
@@ -578,7 +607,7 @@ namespace Final_ASP_Project.Data.Migrations
 
             modelBuilder.Entity("Final_ASP_Project.Models.Genre", b =>
                 {
-                    b.Navigation("Books");
+                    b.Navigation("books");
                 });
 
             modelBuilder.Entity("Final_ASP_Project.Models.Order", b =>

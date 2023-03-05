@@ -31,7 +31,7 @@
             <th>@book.book_Publisher</th>
             <th>@book.book_Description</th>    
             <td>
-                <a asp-action="Edit" asp-route-id=@book.book_Id asp-route-img="@book.book_Image"> Edit</a>
+                <a asp-action="Edit" asp-route-id=@book.book_Id asp-route-img="@book.book_urlImage"> Edit</a>
                 <a asp-action="Delete" asp-route-id=@book.book_Id asp-route-img="@book.book_urlImage" onclick="return confirm('Are You Sure?');"> Delete</a>
             </td>
         </tr>

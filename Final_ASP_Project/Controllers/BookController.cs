@@ -34,8 +34,8 @@ namespace Final_ASP_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                string fileName = UploadFile(book);
-                book.book_urlImage = fileName;
+                string uniqueFileName = UploadFile(book);
+                book.book_urlImage = uniqueFileName;
                 _db.books.Add(book);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
@@ -48,16 +48,14 @@ namespace Final_ASP_Project.Controllers
         {
             string uniqueFileName = null;
 
-            if (book.book_Image != null)
+            if (book.book_Img != null)
             {
                 string uploadsFoder = Path.Combine("wwwroot", "uploads");
-                // name file
-                uniqueFileName = Guid.NewGuid().ToString() + book.book_Id + book.book_Image.FileName;
+                uniqueFileName = Guid.NewGuid().ToString() + book.book_Img.FileName;
                 string filePath = Path.Combine(uploadsFoder, uniqueFileName);
-                // copy ve code
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    book.book_Image.CopyTo(fileStream);
+                    book.book_Img.CopyTo(fileStream);
                 }
             }
             return uniqueFileName;
@@ -77,9 +75,10 @@ namespace Final_ASP_Project.Controllers
         [HttpPost]
         public IActionResult Edit(Book book, int id, string img)
         {
+            book.book_Id=id;
             if (ModelState.IsValid)
             {
-                if (book.book_Image == null)
+                if (book.book_urlImage == null)
                 {
                     book.book_urlImage = img;
                     _db.books.Update(book);

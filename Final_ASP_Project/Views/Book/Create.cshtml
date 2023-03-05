@@ -18,9 +18,9 @@
             </div>
             <div class="form-group">
                 <label>Image</label>
-                <input asp-for="book_Image" type="file" onchange="chooseFile(this)" accept="image/gif, image/jpeg, image/png" style="width: 100%" class="form-control" />
+                <input asp-for="book_urlImage" type="file" onchange="chooseFile(this)" accept="image/gif, image/jpeg, image/png" style="width: 100%" class="form-control" />
                 <div> <img style="height:200px;width:250px" id="image" /></div>
-                <span asp-validation-for="book_Image" class="text-danger"></span>
+                <span asp-validation-for="book_urlImage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label>Book Auhtor</label>

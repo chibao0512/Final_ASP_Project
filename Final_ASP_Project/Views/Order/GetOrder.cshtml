@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Order>
+@{
+    ViewData["Title"] = "Order";
+    Layout = "~/Views/Shared/_LayoutOwner.cshtml";
+}
+
+<h1 class="card-title" style="text-align:center; font-size:30px">Order</h1>
+<div style="width:100%" class="mt-2">
+
+    @if (Model != null && Model.Count() > 0)
+    {
+        <table class="table table-striped">
+            <tr>
+            </tr>
+            @foreach (var order in Model)
+            {
+                @if (order.OrderDetails != null && order.OrderDetails.Count > 0)
+                {
+                    <tr>
+                        <td>
+                            User Name: @order.ApplicationUsers.FullName <br />
+                            User Name: @order.ApplicationUsers.PhoneNumber <br />
+                            User Name: @order.ApplicationUsers.Address <br />
+                            User Email: @order.ApplicationUsers.Email <br />
+                            Order:@order.CreateDate.ToString("dd-MM-yyyy")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="table table-striped">
+                                <tr>
+                                    <td>
+                                        Total:
+                                    </td>
+                                    <td>
+                                        @(order.OrderDetails.Select(item => item.Book.Book_Price * item.Quantity).Sum())
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Book</th>
+                                    <th>Image</th>
+                                    <th>Category</th>
+                                    <th>Unit Price(INR)</th>
+                                    <th>Total Price</th>
+                                </tr>
+                                @foreach (var item in order.OrderDetails)
+                                {
+                                    <tr>
+                                        <td>@item.Book.book_Title</td>
+                                        <td>
+                                            @if (string.IsNullOrEmpty(item.Book.book_urlImage))
+                                            {
+                                                <img src="~/images/NoImage.png" style="width:80px;height:100px" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/uploads/@item.Book.book_urlImage" style="width:80px;height:100px" />
+                                            }
+                                        </td>
+                                        <td>@item.Book.genre.genre_Name</td>
+                                        <td>@item.Book.Book_Price X @item.Quantity</td>
+                                        <td> @(item.Book.Book_Price * item.Quantity) </td>
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+
+                }
+            }
+        </table>
+
+    }
+    else
+    {
+        <h5>No orders</h5>
+    }
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

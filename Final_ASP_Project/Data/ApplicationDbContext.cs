@@ -12,10 +12,10 @@ namespace Final_ASP_Project.Data
         {
         }
         public DbSet<Genre> genres { get; set; }
-        public DbSet<Publisher> publishers { get; set; }
+        
         public DbSet<Book> books { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<ShoppingCart> carts { get; set; }
+        public DbSet<ShoppingCart> CartsDetail { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
