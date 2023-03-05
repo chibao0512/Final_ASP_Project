@@ -16,20 +16,17 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>
-                        ID
-                    </th>
+                    
                     <th>
                         User Name
                     </th>
                    
                     <th>
-                        Image
+                       Email
                     </th>
-                    <th>
-                        Phone
-                    </th>
-
+                    
+                    <th>Address</th>
+                    <th>Gender</th>
                     <th>
 
                     </th>
@@ -39,14 +36,16 @@
                 @foreach (var user in Model)
                 {
                     <tr>
-                        <td>@user.Id</td>
+                      
                         <td>@user.FullName</td>
                         <td>@user.Email</td>
-                     
-                        <td>@user.PhoneNumber</td>
-                        <td>
+                    
+                       
+                        <td>@user.Address</td>
+                        <td>Gender</td>
+                        @*<td>
                             <a class="btn btn-primary mdi mdi-pencil" asp-controller="Admin" asp-action="EditOwner" asp-route-id="@user.Id">Edit</a>
-                        </td>
+                        </td>*@
                     </tr>
                 }
             </tbody>
@@ -54,6 +53,3 @@
     </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
