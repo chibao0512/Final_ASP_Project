@@ -1,4 +1,4 @@
-﻿namespace Final_ASP_Project.Models.DTOs
+﻿namespace Final_ASP_Project.Models.BookDisplay
 {
     public class BookDisplayModel
     {
@@ -8,3 +8,4 @@
         public int GenreId { get; set; } = 0;
     }
 }
+

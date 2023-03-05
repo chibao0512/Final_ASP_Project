@@ -34,8 +34,8 @@ namespace Final_ASP_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = UploadFile(book);
-                book.book_urlImage = uniqueFileName;
+                string fileName = UploadFile(book);
+                book.book_urlImage = fileName;
                 _db.books.Add(book);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
@@ -46,19 +46,21 @@ namespace Final_ASP_Project.Controllers
 
         public string UploadFile(Book book)
         {
-            string uniqueFileName = null;
+            string FileName = null;
 
             if (book.book_Img != null)
             {
                 string uploadsFoder = Path.Combine("wwwroot", "uploads");
-                uniqueFileName = Guid.NewGuid().ToString() + book.book_Img.FileName;
-                string filePath = Path.Combine(uploadsFoder, uniqueFileName);
+                // name file
+                FileName = Guid.NewGuid().ToString() + book.book_Id + book.book_Img.FileName;
+                string filePath = Path.Combine(uploadsFoder, FileName);
+                // copy ve code
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     book.book_Img.CopyTo(fileStream);
                 }
             }
-            return uniqueFileName;
+            return  FileName;
         }
         // edit
 
@@ -72,13 +74,14 @@ namespace Final_ASP_Project.Controllers
             }
             return View(book);
         }
-        [HttpPost]
+      
+    
         public IActionResult Edit(Book book, int id, string img)
         {
             book.book_Id=id;
             if (ModelState.IsValid)
             {
-                if (book.book_urlImage == null)
+                if (book.book_Img == null)
                 {
                     book.book_urlImage = img;
                     _db.books.Update(book);
@@ -109,7 +112,21 @@ namespace Final_ASP_Project.Controllers
         }
 
         // delete
-
+        [Route("/Book/Delete/{id:}")]
+        public IActionResult Delete(int id)
+        {
+            Book book = _db.books.Find(id);
+            if (book == null)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                _db.books.Remove(book);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+        }
         public ActionResult Delete(int id, string img)
         {
             Book book = _db.books.Find(id);

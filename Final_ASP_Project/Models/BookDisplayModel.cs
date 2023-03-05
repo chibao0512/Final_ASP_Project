@@ -7,7 +7,7 @@
         public string STerm { get; set; } = "";
         public int GenreId { get; set; } = 0;
 
-        public static implicit operator BookDisplayModel(DTOs.BookDisplayModel v)
+        public static implicit operator BookDisplayModel(BookDisplay.BookDisplayModel v)
         {
             throw new NotImplementedException();
         }
