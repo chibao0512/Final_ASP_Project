@@ -9,7 +9,8 @@
         <th>ID</th>
         <th>Name</th>
         <th>Description</th>
-        <th>Status</th>
+      <th>Action</th>
+      <th></th>
     </tr>
     @foreach (var genre in Model)
     {
@@ -17,11 +18,12 @@
             <th>@genre.genre_Id</th>
             <th>@genre.genre_Name</th>
             <th>@genre.genre_Description</th>
-            <th></th>
+        
             <td>
                 <a asp-action="Edit" asp-route-id=@genre.genre_Id> Edit</a>
                 <a asp-action="Delete" asp-route-id=@genre.genre_Id onclick="return confirm('Are You Sure?');"> Delete</a>
             </td>
+            <th></th>
         </tr>
     }
 </table>

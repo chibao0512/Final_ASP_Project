@@ -9,13 +9,11 @@
 
 <div class="card">
     <div class="card-body">
-        <h1 class="card-title" style="text-align:center; font-size:30px">User</h1>
+        <h1 class="card-title" style="text-align:center; font-size:30px">Customer</h1>
         <table class="table">
             <thead>
                 <tr>
-                    <th>
-                        ID
-                    </th>
+                  
                     <th>
                         User Name
                     </th>
@@ -24,35 +22,31 @@
                     </th>
                  
                     <th>
-                        Phone
+                        Gender
                     </th>
 
                     <th>
-
+                        Address
                     </th>
+                    <th>Date of birth</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var user in Model)
                 {
                         <tr>
-                            <td>@user.Id</td>
+                        
                             <td>@user.FullName</td>
                             <td>@user.Email</td>
-                    
-                            <td>@user.PhoneNumber</td>
+                            <td>@user.Gender</td>
+                            <td>@user.Address</td>
+                            <th>@user.DoB.Date.ToString("dd/MM/yyyy")</th>
 
 
-                            <td>
-                                <a class="btn btn-primary mdi mdi-pencil" asp-controller="Admin" asp-action="EditUser" asp-route-id="@user.Id">Edit</a>
-                            </td>
+                            
                         </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
-
-@section Scripts {
-        <partial name="_ValidationScriptsPartial" />
-}
