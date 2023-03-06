@@ -3,7 +3,7 @@
 <div style="width:100%" class="mt-2">
     <a href="/Identity/Account/Manage" class="btn btn-warning btn-sm float-right">Back To Profile</a>
 
-    <h4 style="color:blue; padding:20px">Purchase History</h4>
+    <h4 style="color:blue; padding:20px; text-align:center">Purchase History</h4>
     @if (Model != null && Model.Count() > 0)
     {
         <table class="table table-striped">
@@ -21,11 +21,9 @@
                                 <tr>
                                     <td><b>Order date:</b>   @order.CreateDate.ToString("dd-MM-yyyy")</td>
                                 </tr>
-                               
 
                                 <tr>
                                     <th>Title of Book</th>
-                                   
                                     <th>Genre</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
@@ -64,7 +62,7 @@
     }
     else
     {
-        <h5>No orders</h5>
+        <h5 style="text-align:center; color:red">No orders</h5>
     }
 </div>
 
