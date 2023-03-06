@@ -46,7 +46,7 @@
                     else
                     {
                         <button type="button" onclick="add(@book.book_Id)" class="btn btn-primary">Add to cart</button>
-                            //<a asp-action="BookDetail" asp-route-id="@book.book_Id" class="btn btn-primary">View Detail</a>
+                          
                             <a asp-controller="Home" asp-action="BookDetail" asp-route-cate="@book.genre.genre_Name" asp-route-id="@book.book_Id" class="btn btn-warning">View Detail</a>
                     }
                     </div>
@@ -75,7 +75,7 @@
                     var result = await response.json();
                     var cartCountEl = document.getElementById("cartCount");
                     cartCountEl.innerHTML = result;
-                    window.location.href = "/User/Cart/GetUserCart";
+                    window.location.href = "/User/Cart/CartUser";
                 }
             }
             catch (err) {

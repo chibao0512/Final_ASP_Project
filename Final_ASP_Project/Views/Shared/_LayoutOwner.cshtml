@@ -124,7 +124,12 @@
                     <span>User</span>
                 </a>
             </li><!-- End Da  shboard Nav -->
-
+            <li class="nav-item">
+                <a class="nav-link " asp-controller="Order" asp-action="GetOrder">
+                    <i class="bi bi-grid"></i>
+                    <span>Order</span>
+                </a>
+            </li><!-- End Da  shboard Nav -->
         </ul>
 
     </aside><!-- End Sidebar-->
@@ -166,3 +171,4 @@
 </body>
 
 </html>
+@await RenderSectionAsync("Scripts", required: false)

@@ -3,7 +3,7 @@
 <div style="width:100%" class="mt-2">
     <a href="/Identity/Account/Manage" class="btn btn-warning btn-sm float-right">Back To Profile</a>
 
-    <h4 style="text-align:center; color:blue; padding:20px">Purchase History</h4>
+    <h4 style="color:blue; padding:20px">Purchase History</h4>
     @if (Model != null && Model.Count() > 0)
     {
         <table class="table table-striped">
@@ -25,28 +25,21 @@
 
                                 <tr>
                                     <th>Title of Book</th>
-                                    <th>Image</th>
+                                   
                                     <th>Genre</th>
-                                    <th>Price  x Quantity</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
                                     <th>Total Price</th>
                                 </tr>
                                 @foreach (var item in order.OrderDetails)
                                 {
                                     <tr>
                                         <td>@item.Book.book_Title</td>
-                                        <td>
-                                            @if (string.IsNullOrEmpty(item.Book.book_urlImage))
-                                            {
-                                                <img src="~/images/NoImage.png" style="width:80px;height:100px" />
-                                            }
-                                            else
-                                            {
-                                                <img src="~/uploads/@item.Book.book_urlImage" style="width:80px;height:100px" />
-                                            }
-                                        </td>
+                            
                                         <td>@item.Book.genre.genre_Name</td>
-                                        <td><b>@item.Book.Book_Price<a>VNĐ</a>  x  @item.Quantity</b></td>
-                                        <td> <b>@(item.Book.Book_Price * item.Quantity)<a>VNĐ</a> </b></td>
+                                        <td><b>@item.Book.Book_Price<a>VNĐ</a></b></td>
+                                        <td><b> @item.Quantity</b></td>
+                                        <td><b>@(item.Book.Book_Price * item.Quantity)<a>VNĐ</a> </b></td>
                                     </tr>
                                 }
                                 <tr>

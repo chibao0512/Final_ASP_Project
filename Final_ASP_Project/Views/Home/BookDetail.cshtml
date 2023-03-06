@@ -54,7 +54,7 @@
                     var result = await response.json();
                     var cartCountEl = document.getElementById("cartCount");
                     cartCountEl.innerHTML = result;
-                    window.location.href = "/User/Cart/GetUserCart";
+                    window.location.href = "/User/Cart/CartUser";
                 }
             }
             catch (err) {
@@ -64,3 +64,6 @@
     </script>
 }
 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

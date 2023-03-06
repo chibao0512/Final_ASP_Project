@@ -18,11 +18,10 @@
                 {
                     <tr>
                         <td>
-                            User Name: @order.ApplicationUsers.FullName <br />
-                            User Name: @order.ApplicationUsers.PhoneNumber <br />
-                            User Name: @order.ApplicationUsers.Address <br />
-                            User Email: @order.ApplicationUsers.Email <br />
-                            Order:@order.CreateDate.ToString("dd-MM-yyyy")
+                          Name: @order.ApplicationUsers.FullName <br />
+                             Addres: @order.ApplicationUsers.Address <br />
+                           Email: @order.ApplicationUsers.Email <br />
+                            Order Date:@order.CreateDate.ToString("dd-MM-yyyy")
                         </td>
                     </tr>
                     <tr>
@@ -40,8 +39,8 @@
                                 <tr>
                                     <th>Book</th>
                                     <th>Image</th>
-                                    <th>Category</th>
-                                    <th>Unit Price(INR)</th>
+                                    <th>Genre</th>
+                                    <th> Price</th>
                                     <th>Total Price</th>
                                 </tr>
                                 @foreach (var item in order.OrderDetails)
