@@ -1,5 +1,5 @@
-using Final_ASP_Project.Data;
-using Final_ASP_Project.Service;
+
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +17,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<IFileService, FileService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
