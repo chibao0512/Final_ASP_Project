@@ -15,7 +15,7 @@ namespace Final_ASP_Project.Controllers
         // index
         public IActionResult Index()
         {
-            IEnumerable<Genre> genre = _db.genres.Where(c => c.genre_Status == "processed").ToList();
+            IEnumerable<Genre> genre = _db.genres.Where(c => c.genre_Status == "prosessed").ToList();
             return View(genre);
         }
 

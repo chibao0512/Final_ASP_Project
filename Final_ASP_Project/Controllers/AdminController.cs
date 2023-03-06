@@ -1,5 +1,5 @@
 ﻿using Final_ASP_Project.DSRole;
-using Final_ASP_Project.Service;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,8 +12,7 @@ namespace Final_ASP_Project.Controllers
         private readonly ApplicationDbContext _db;
        
         public AdminController(ApplicationDbContext db,
-            UserManager<ApplicationUser> userManager,
-            IFileService fileService)
+            UserManager<ApplicationUser> userManager)
         {
             _db = db;
             _userManager = userManager;

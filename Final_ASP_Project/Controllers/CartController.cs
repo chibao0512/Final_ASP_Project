@@ -28,18 +28,18 @@ namespace Final_ASP_Project.Controllers
 
             if (redirect == 0)
                 return Ok(cartCount);
-            return RedirectToAction("GetUserCart");
+            return RedirectToAction("CartUser");
         }
 
         [Route("User/Cart/RemoveItem")]
         public async Task<IActionResult> RemoveItem(int bookId)
         {
             var cartCount = await RemoveCartItem(bookId);
-            return RedirectToAction("GetUserCart");
+            return RedirectToAction("CartUser");
         }
 
-        [Route("User/Cart/GetUserCart")]
-        public async Task<IActionResult> GetUserCart()
+        [Route("User/Cart/CartUser")]
+        public async Task<IActionResult> CartUser()
         {
             var cart = await GetCartItem();
             return View(cart);
@@ -58,13 +58,13 @@ namespace Final_ASP_Project.Controllers
             var isCheckedOut = await DoCheckout();
             if (!isCheckedOut)
             {
-                TempData["Quantity"] = "The number of products is not enough! The quantity have only";
-                return Redirect("~/User/Cart/GetUserCart");
+                TempData["Quantity"] = "The number of products is not enough! The quantity not enough";
+                return Redirect("~/User/Cart/CartUser");
             }
             else
             {
                 TempData["Success"] = "Order Success, thanks for order";
-                return Redirect("~/User/Cart/GetUserCart");
+                return Redirect("~/User/Cart/CartUser");
             }
 
 

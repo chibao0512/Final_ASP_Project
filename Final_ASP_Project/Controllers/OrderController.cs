@@ -21,7 +21,7 @@ namespace Final_ASP_Project.Controllers
             _userManager = userManager;
         }
 
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Customer")]
   
         public async Task<IEnumerable<Order>> UserOrders()
         {
@@ -52,7 +52,7 @@ namespace Final_ASP_Project.Controllers
             return View(orders);
         }
 
-        [Authorize(Roles = "Owner")]
+        //[Authorize(Roles = "Owner")]
         [Route("Owner/GetOrder")]
         public async Task<IActionResult> GetOrder()
         {
