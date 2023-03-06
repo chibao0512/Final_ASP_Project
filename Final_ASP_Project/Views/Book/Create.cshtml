@@ -5,6 +5,17 @@
     Layout = "~/Views/Shared/_LayoutOwner.cshtml";
 }
 
+
+@if (TempData["FailImg"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>
+            @TempData["FailImg"]
+        </strong>
+    </div>
+}
+<br />
+
 <h1>Create</h1>
 
 <h4>Book</h4>
@@ -87,3 +98,4 @@
         }
     }
 </script>
+
