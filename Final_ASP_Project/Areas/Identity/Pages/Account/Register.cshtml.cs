@@ -81,13 +81,13 @@ namespace Final_ASP_Project.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            [Required]
+       
             [Display(Name = "Day of Brith")]
             public DateTime DoB { get; set; }
-            [Required]
+        
             [Display(Name = "Gender")]
             public string Gender { get; set; }
-            [Required]
+           
             [Display(Name = "Address")]
             public string Address { get; set; }
         }
@@ -116,7 +116,7 @@ namespace Final_ASP_Project.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, Role.Customer.ToString());
+                    await _userManager.AddToRoleAsync(user, Role.Admin.ToString());
                     _logger.LogInformation("User created a new account with password.");
 
                     

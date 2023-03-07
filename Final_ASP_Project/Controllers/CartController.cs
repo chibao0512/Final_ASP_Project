@@ -125,10 +125,6 @@ namespace Final_ASP_Project.Controllers
 
 
         }
-
-
-        
-
         public async Task<int> RemoveCartItem(int bookId)
         {
             string userId = GetUserId();

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Final_ASP_Project.Controllers
 {
+
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -26,6 +27,7 @@ namespace Final_ASP_Project.Controllers
             string userId = _userManager.GetUserId(principal);
             return userId;
         }
+        [Authorize(Roles = "Owner")]
         [Route("Owner/GetOrder")]
         public async Task<IActionResult> GetOrder()
         {

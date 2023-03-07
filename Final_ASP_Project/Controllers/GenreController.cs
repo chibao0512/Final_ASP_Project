@@ -1,9 +1,11 @@
 ﻿using Final_ASP_Project.Data;
 using Final_ASP_Project.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Final_ASP_Project.Controllers
 {
+    [Authorize(Roles = "Owner")]
     public class GenreController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -12,19 +14,19 @@ namespace Final_ASP_Project.Controllers
             _db = db;
         }
 
-        // index
+        [Route("Owner/Genre")]
         public IActionResult Index()
         {
             IEnumerable<Genre> genre = _db.genres.Where(c => c.genre_Status == "processed").ToList();
             return View(genre);
         }
 
-        // create
+        [Route("Owner/Genre/Create")]
         public IActionResult Create()
         {
             return View();
         }
-
+        [Route("Owner/Genre/Create")]
         [HttpPost]
         public IActionResult Create(Genre genre)
         {
@@ -39,6 +41,7 @@ namespace Final_ASP_Project.Controllers
         }
 
         // edit
+        [Route("Owner/Genre/Edit{id:}")]
         public IActionResult Edit(int id)
         {
             Genre genre = _db.genres.Find(id);
@@ -48,6 +51,7 @@ namespace Final_ASP_Project.Controllers
             }
             return View(genre);
         }
+        [Route("Owner/Genre/Edit{id:}")]
         [HttpPost]
         public IActionResult Edit(Genre genre, int id)
         {
@@ -63,6 +67,7 @@ namespace Final_ASP_Project.Controllers
         }
 
         // delete
+        [Route("Owner/Genre/Delete{id:}")]
         public ActionResult Delete(int id)
         {
             Genre Genre = _db.genres.Find(id);

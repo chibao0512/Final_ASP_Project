@@ -1,11 +1,12 @@
 ﻿using Final_ASP_Project.DSRole;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Final_ASP_Project.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -22,6 +23,7 @@ namespace Final_ASP_Project.Controllers
         {
             return View();
         }
+        
         [Route("Admin/RequestGenre")]
         public IActionResult RequestGenre()
         {
@@ -174,7 +176,7 @@ namespace Final_ASP_Project.Controllers
             {
                 var owner = new ApplicationUser
                 {
-                    UserName = acc.Email,
+                    UserName = acc.Name,
                     FullName = acc.Name,
                     Email = acc.Email,
                     PhoneNumber = acc.Phone,
