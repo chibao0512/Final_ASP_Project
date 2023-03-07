@@ -15,7 +15,15 @@ namespace Final_ASP_Project.Models
         [StringLength(10, ErrorMessage = "Phone number must have 10 digits", MinimumLength = 10)]
         public string Phone { get; set; }
 
-        
+        [Display(Name = "Day of Brith")]
+        public DateTime DoB { get; set; }
+
+        [Display(Name = "Gender")]
+        public string Gender { get; set; }
+
+        [Display(Name = "Address")]
+        public string Address { get; set; }
+
 
 
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]

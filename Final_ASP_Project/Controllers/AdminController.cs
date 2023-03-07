@@ -179,6 +179,9 @@ namespace Final_ASP_Project.Controllers
                     UserName = acc.Name,
                     FullName = acc.Name,
                     Email = acc.Email,
+                    Address=acc.Address,
+                    DoB=acc.DoB,
+                    Gender=acc.Gender,
                     PhoneNumber = acc.Phone,
 
 

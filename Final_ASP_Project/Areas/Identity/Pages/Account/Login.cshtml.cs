@@ -88,25 +88,25 @@ namespace Final_ASP_Project.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-            
-                //var signedUser = await _userManager.FindByEmailAsync(Input.Email);
+
+                var signedUser = await _userManager.FindByEmailAsync(Input.Email);
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    //_logger.LogInformation("User logged in.");
-                    //var roles = await _userManager.GetRolesAsync(signedUser);
-                    //if (roles.Contains("Customer"))
-                    //{
-                    //    return Redirect("~/Home/ShowBook");
-                    //}
-                    //else if (roles.Contains("Owner"))
-                    //{
-                    //    return Redirect("~/Owner/Index");
-                    //}
-                    //else if (roles.Contains("Admin"))
-                    //{
-                    //    return Redirect("~/Admin/Index");
-                    //}
+                    _logger.LogInformation("User logged in.");
+                    var roles = await _userManager.GetRolesAsync(signedUser);
+                    if (roles.Contains("Customer"))
+                    {
+                        return Redirect("~/Home/ShowBook");
+                    }
+                    else if (roles.Contains("Owner"))
+                    {
+                        return Redirect("~/Owner/Index");
+                    }
+                    else if (roles.Contains("Admin"))
+                    {
+                        return Redirect("~/Admin/Index");
+                    }
                     return LocalRedirect(returnUrl);
 
                     
