@@ -54,7 +54,7 @@
                     <td>@item.Book.genre.genre_Name</td>
                     <td>
                         @item.Book.Book_Price (vnđ)  x
-                        <input asp-for="@item.Quantity"></input>
+                        <input asp-for="@item.Quantity" onclick="@item.BookId" asp-route-redirect="1"></input>
                     </td>
                     <td>@(item.Book.Book_Price * item.Quantity) vnđ</td>
                     <td>
