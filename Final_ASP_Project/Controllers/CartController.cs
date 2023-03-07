@@ -25,12 +25,59 @@ namespace Final_ASP_Project.Controllers
         public async Task<IActionResult> AddItem(int bookId, int qty = 1, int redirect = 0)
         {
             var cartCount = await AddItemCart(bookId, qty);
-
             if (redirect == 0)
                 return Ok(cartCount);
             return RedirectToAction("CartUser");
         }
-
+        private string GetUserId()
+        {
+            var principal = _httpContextAccessor.HttpContext.User;
+            string userId = _userManager.GetUserId(principal);
+            return userId;
+        }
+        public async Task<int> AddItemCart(int bookId, int qty)
+        {
+            string userId = GetUserId();
+            try
+            {
+                if (string.IsNullOrEmpty(userId))throw new Exception("User must have login");
+                var cart = await GetCart(userId);
+                if (cart is null)
+                {
+                    cart = new ShoppingCart
+                    {
+                        UserId = userId
+                    };
+                    _db.ShoppingCarts.Add(cart);
+                }
+                _db.SaveChanges();
+                var cartItem = _db.Carts.FirstOrDefault(a => a.ShoppingCartId == cart.Id && a.BookId == bookId);
+                if (cartItem is not null)
+                {
+                    _db.SaveChanges();
+                    cartItem.Quantity += qty;
+                }
+                else
+                {
+                    var book = _db.books.Find(bookId);
+                    cartItem = new Cart
+                    {
+                        BookId = bookId,
+                        ShoppingCartId = cart.Id,
+                        Quantity = qty,
+                        UnitPrice = book.Book_Price 
+                    };
+                    _db.Carts.Add(cartItem);
+                }
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+            }
+            var cartItemCount = await GetCartItemCount(userId);
+            return cartItemCount;
+        }
+        // Remove quantity of product 
         [Route("User/Cart/RemoveItem")]
         public async Task<IActionResult> RemoveItem(int bookId)
         {
@@ -51,14 +98,23 @@ namespace Final_ASP_Project.Controllers
             int cartItem = await GetCartItemCount();
             return Ok(cartItem);
         }
-
+        public async Task<int> GetCartItemCount(string userId = "")
+        {
+            if (!string.IsNullOrEmpty(userId))
+            {
+                userId = GetUserId();
+            }
+            var data = await (from cart in _db.ShoppingCarts join cartDetail in _db.Carts
+            on cart.Id equals cartDetail.ShoppingCartId select new { cartDetail.Id }).ToListAsync();
+            return data.Count;
+        }
         [Route("User/Cart/Checkout")]               
         public async Task<IActionResult> Checkout()
         {
             var isCheckedOut = await DoCheckout();
             if (!isCheckedOut)
             {
-                TempData["Quantity"] = "The number of products is not enough! The quantity not enough";
+                TempData["Quantity"] = "Insufficient quantity of store in stock";
                 return Redirect("~/User/Cart/CartUser");
             }
             else
@@ -71,59 +127,10 @@ namespace Final_ASP_Project.Controllers
         }
 
 
-        public async Task<int> AddItemCart(int bookId, int qty)
-        {
-            string userId = GetUserId();
-            try
-            {
-                if (string.IsNullOrEmpty(userId))
-                    throw new Exception("user is not logged-in");
-                var cart = await GetCart(userId);
-                if (cart is null)
-                {
-                    cart = new ShoppingCart
-                    {
-                        UserId = userId
-                    };
-                    _db.ShoppingCarts.Add(cart);
-                }
-                _db.SaveChanges();
-
-                var cartItem = _db.Carts
-                                  .FirstOrDefault(a => a.ShoppingCartId == cart.Id && a.BookId == bookId);
-                if (cartItem is not null)
-                {
-                    _db.SaveChanges();
-                    cartItem.Quantity += qty;
-                }
-                else
-                {
-
-                    var book = _db.books.Find(bookId);
-                    cartItem = new Cart
-                    {
-                        BookId = bookId,
-                        ShoppingCartId = cart.Id,
-                        Quantity = qty,
-                        UnitPrice = book.Book_Price  // it is a new line after update
-
-
-                    };
-                    _db.Carts.Add(cartItem);
-
-                }
-                _db.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-            }
-            var cartItemCount = await GetCartItemCount(userId);
-            return cartItemCount;
-        }
+        
 
         public async Task<int> RemoveCartItem(int bookId)
         {
-            //using var transaction = _db.Database.BeginTransaction();
             string userId = GetUserId();
             try
             {
@@ -132,11 +139,10 @@ namespace Final_ASP_Project.Controllers
                 var cart = await GetCart(userId);
                 if (cart is null)
                     throw new Exception("Invalid cart");
-                // cart detail section
-                var cartItem = _db.Carts
-                                  .FirstOrDefault(a => a.ShoppingCartId == cart.Id && a.BookId == bookId);
+                // get to cart detail
+                var cartItem = _db.Carts.FirstOrDefault(a => a.ShoppingCartId == cart.Id && a.BookId == bookId);
                 if (cartItem is null)
-                    throw new Exception("Not items in cart");
+                    throw new Exception("cart don't have item");
                 else if (cartItem.Quantity == 1)
                     _db.Remove(cartItem);
                 else
@@ -156,11 +162,8 @@ namespace Final_ASP_Project.Controllers
             var userId = GetUserId();
             if (userId == null)
                 throw new Exception("Invalid userid");
-            var shoppingCart = await _db.ShoppingCarts
-                                  .Include(a => a.Carts)
-                                  .ThenInclude(a => a.Book)
-                                  .ThenInclude(a => a.genre)
-                                  .Where(a => a.UserId == userId).FirstOrDefaultAsync();
+            var shoppingCart = await _db.ShoppingCarts.Include(a => a.Carts).ThenInclude(a => a.Book)
+                                  .ThenInclude(a => a.genre).Where(a => a.UserId == userId).FirstOrDefaultAsync();
             return shoppingCart;
 
         }
@@ -170,25 +173,11 @@ namespace Final_ASP_Project.Controllers
             return cart;
         }
 
-        public async Task<int> GetCartItemCount(string userId = "")                                                                             
-        {
-            if (!string.IsNullOrEmpty(userId))
-            {
-                userId = GetUserId();
-            }
-            var data = await (from cart in _db.ShoppingCarts
-                              join cartDetail in _db.Carts
-                              on cart.Id equals cartDetail.ShoppingCartId
-                              select new { cartDetail.Id }
-                        ).ToListAsync();
-            return data.Count;
-        }
-
+       
         public async Task<bool> DoCheckout()
         {
             try
             {
-                // logic
                 // move data from cartDetail to order and order detail then we will remove cart detail
                 var userId = GetUserId();
                 if (string.IsNullOrEmpty(userId))
@@ -196,8 +185,7 @@ namespace Final_ASP_Project.Controllers
                 var cart = await GetCart(userId);
                 if (cart is null)
                     throw new Exception("Invalid cart");
-                var cartDetail = _db.Carts
-                                    .Where(a => a.ShoppingCartId == cart.Id).ToList();
+                var cartDetail = _db.Carts.Where(a => a.ShoppingCartId == cart.Id).ToList();
                 if (cartDetail.Count == 0)
                     throw new Exception("Cart is empty");
                 var order = new Order
@@ -218,13 +206,9 @@ namespace Final_ASP_Project.Controllers
                         UnitPrice = item.UnitPrice
                     };
                     _db.OrderDetails.Add(orderDetail);
-
-
                     var quantity = _db.books.FirstOrDefault(a => a.book_Id == item.BookId);
-
                     if (quantity.book_Quantity < item.Quantity)
                     {
-
                         return false;
                     }
                     else
@@ -232,27 +216,18 @@ namespace Final_ASP_Project.Controllers
                         quantity.book_Quantity = quantity.book_Quantity - item.Quantity;
                         _db.Update(quantity);
                         _db.SaveChanges();
-
-                    }
-
+                 }
                 }
                 _db.Carts.RemoveRange(cartDetail);
                 _db.SaveChanges();
-
                 return true;
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
 
-        private string GetUserId()
-        {
-            var principal = _httpContextAccessor.HttpContext.User;
-            string userId = _userManager.GetUserId(principal);
-            return userId;
-        }
+   
     }
 }
