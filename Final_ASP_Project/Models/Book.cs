@@ -11,7 +11,7 @@ namespace Final_ASP_Project.Models
         [Required]
         public string book_Title { get; set; }
         [Required]
-        public DateTime publication_date { get; set; }
+        public DateTime publication_date { get; set; } = DateTime.UtcNow;
         public string book_Author { get; set; }
         [Required]
         public double Book_Price { get; set; }
